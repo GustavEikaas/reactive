@@ -1,5 +1,4 @@
 import { Reactive } from '../classes';
-import { useEffect, useState } from 'react';
 import { useReactiveValue } from './useReactiveValue';
 
 /**
