@@ -1,9 +1,10 @@
 import {
-    Callback,
-    OnChange,
-    OnValueChanged,
-    SetValue
-    } from '../types';
+	Callback,
+	CompareFunction,
+	OnChange,
+	OnValueChanged,
+	SetValue
+	} from '../types';
 
 export class Reactive<TValue> implements ReactiveTS<TValue> {
 	/**
@@ -11,18 +12,25 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 	 * @param initialValue - Initial value
 	 * @returns Reactive instance
 	 */
-	static New<TValue>(initialValue: TValue) {
-		return new Reactive(initialValue);
+	static New<TValue>(initialValue: TValue, compareFunction?: CompareFunction<TValue>) {
+		return new Reactive(initialValue, compareFunction);
 	}
 
 	value: TValue;
 
-	constructor(initialValue: TValue) {
+	constructor(initialValue: TValue, compareFunction?: CompareFunction<TValue>) {
+		if (compareFunction) {
+			this.#compareFunction = compareFunction;
+		}
 		this.value = initialValue;
 	}
 
 	setValue = (value: TValue) => {
 		const oldValue = this.value;
+		//Both values are equal, early return
+		if (this.#compareFunction(value, oldValue)) {
+			return;
+		}
 		this.value = value;
 		this.#onChangeCallbacks.forEach(({ callback }) => callback(value, oldValue));
 	};
@@ -36,6 +44,8 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 	};
 
 	#onChangeCallbacks: Callback<OnValueChanged<TValue>>[] = [];
+
+	#compareFunction: CompareFunction<TValue> = () => false;
 }
 
 interface ReactiveTS<TValue> {
