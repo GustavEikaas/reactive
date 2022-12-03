@@ -25,6 +25,7 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 		this.value = initialValue;
 	}
 
+	//Setter for new value
 	setValue = (value: TValue) => {
 		const oldValue = this.value;
 		//Both values are equal, early return
