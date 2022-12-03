@@ -4,6 +4,7 @@
   "description": "React library for complex state managment",
   "version": "0.0.0-development",
   "type": "module",
+  "publishConfig": {"access": "public"},
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
