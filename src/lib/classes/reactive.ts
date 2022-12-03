@@ -33,6 +33,7 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 			return;
 		}
 		this.value = value;
+		
 		this.#onChangeCallbacks.forEach(({ callback }) => callback(value, oldValue));
 	};
 
