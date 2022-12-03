@@ -10,7 +10,6 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 	/**
 	 * Creates new Reactive
 	 * @param initialValue - Initial value
-	 * @returns Reactive instance
 	 */
 	static New<TValue>(initialValue: TValue, compareFunction?: CompareFunction<TValue>) {
 		return new Reactive(initialValue, compareFunction);
@@ -33,7 +32,7 @@ export class Reactive<TValue> implements ReactiveTS<TValue> {
 			return;
 		}
 		this.value = value;
-		
+
 		this.#onChangeCallbacks.forEach(({ callback }) => callback(value, oldValue));
 	};
 
